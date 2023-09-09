@@ -1,6 +1,6 @@
 import requests
 
-from config import base_url, api_version, API_KEY
+from config import base_url, api_version, get_api_key
 
 
 def scan_url(url_to_scan):
@@ -13,7 +13,7 @@ def scan_url(url_to_scan):
     payload = {"url": url_to_scan}
     headers = {
         "accept": "application/json",
-        "x-apikey": API_KEY,
+        "x-apikey": get_api_key(),
         "content-type": "application/x-www-form-urlencoded"
     }
     response = requests.post(_url, data=payload, headers=headers)
@@ -34,7 +34,7 @@ def get_url_analysis_report(url_id):
     _url = f"{base_url}/{api_version}/urls/{url_id}"
     headers = {
         "accept": "application/json",
-        "X-Apikey": API_KEY,
+        "X-Apikey": get_api_key(),
     }
     response = requests.get(_url, headers=headers)
     json_resp = response.json()

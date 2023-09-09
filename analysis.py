@@ -1,6 +1,6 @@
 import requests
 
-from config import base_url, api_version, API_KEY
+from config import base_url, api_version, get_api_key
 
 
 def get_scan_analysis(scan_id):
@@ -12,7 +12,7 @@ def get_scan_analysis(scan_id):
     _url = f"{base_url}/{api_version}/analyses/{scan_id}"
     headers = {
         "accept": "application/json",
-        "X-Apikey": API_KEY,
+        "X-Apikey": get_api_key(),
     }
     response = requests.get(_url, headers=headers)
     json_resp = response.json()
@@ -41,5 +41,5 @@ def is_malicious(data, _type):
         _message = "malicious" if _is_mal else "not malicious"
     else:
         raise Exception(f"Invalid type {_type} given")
-    return _is_mal, f"Found {_message}!"
+    return _is_mal, _message
 

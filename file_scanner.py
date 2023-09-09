@@ -2,8 +2,8 @@ import os
 
 import requests
 
-from config import base_url, api_version, API_KEY
-from utils import get_file_type, check_file_size, get_file_from_directory, write_to_file
+from config import base_url, api_version, get_api_key
+from utils import get_file_type, check_file_size
 
 
 def scan_file(file, file_pw=None):
@@ -16,7 +16,7 @@ def scan_file(file, file_pw=None):
     _url, _is_small_enough = get_url_endpoint(file)
     headers = {
         "accept": "application/json",
-        "x-apikey": API_KEY
+        "x-apikey": get_api_key()
     }
     files = {"file": (os.path.basename(file), open(file, "rb"), get_file_type(file))}
 
@@ -51,7 +51,7 @@ def generate_upload_url():
     _url = f"{base_url}/{api_version}/files/upload_url"
     headers = {
         "accept": "application/json",
-        "x-apikey": API_KEY
+        "x-apikey": get_api_key()
     }
     response = requests.get(_url, headers=headers)
     json_resp = response.json()
